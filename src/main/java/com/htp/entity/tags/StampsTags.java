@@ -1,5 +1,7 @@
 package com.htp.entity.tags;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.htp.entity.stamps.Stamps;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -14,4 +16,14 @@ public class StampsTags {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_stamps")
+    private Stamps stampsStampsTags;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_tags")
+    private Tags tagsStampsTags;
 }

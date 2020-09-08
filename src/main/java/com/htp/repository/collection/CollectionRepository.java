@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CollectionRepository extends CrudRepository<Collection, Long>, JpaRepository<Collection,Long> {
-    Optional<Collection> findById(Long id);
+    @Query("select hu from Collection hu where hu.id =:id")
+    Collection findByIdNumber(Long id);
 
     @Query("select hu from Collection hu ORDER BY hu.id")
     List<Collection> findAll();

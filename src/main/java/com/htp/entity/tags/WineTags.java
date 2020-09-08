@@ -1,5 +1,7 @@
 package com.htp.entity.tags;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.htp.entity.wine.Wine;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -14,4 +16,14 @@ public class WineTags {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_wine")
+    private Wine wineWineTags;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_tags")
+    private Tags tagsWineTags;
 }

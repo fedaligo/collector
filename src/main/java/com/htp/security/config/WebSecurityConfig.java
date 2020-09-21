@@ -27,12 +27,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors();
-        System.out.println("cors");
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/users/allusers").hasRole("ADMIN")
-                .antMatchers("/users/**", "/tags/**", "/collection/**").permitAll()
+                .antMatchers("/users/allusers", "/users/delete/**").hasRole("ADMIN")
+                .antMatchers("/users/**", "/tags/**", "/collection/**", "/likes/**", "/comments/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

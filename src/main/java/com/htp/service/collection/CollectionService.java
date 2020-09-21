@@ -23,7 +23,6 @@ public class CollectionService {
     private static final int COUNT_OF_ITEMS_IN_COLLECTION = 4;
     private static final int CONTINUE = 0;
     private static final int NEXT = 1;
-    private static final int COUNT_OF_GREATEST_COLLECTIONS = 3;
     private static final int COUNT_OF_LAST_ITEMS = 3;
 
     private final CollectionRepository collectionRepository;
@@ -107,12 +106,12 @@ public class CollectionService {
         return maxSizeOfCollection;
     }
 
-    public List<String[]> getGreatestCollections() {
+    public List<String[]> getGreatestCollections(int countOfGreatestCollections) {
         List<String[]> sizeOfEveryCollection = getSizeOfEveryCollection();
         List<String[]> greatestCollections = new ArrayList();
         for(int i = 0; i < sizeOfEveryCollection.size(); ++i) {
             this.compareCollectionsAndAddTheGreatestIntoList(greatestCollections, sizeOfEveryCollection);
-            if (greatestCollections.size() == COUNT_OF_GREATEST_COLLECTIONS) {
+            if (greatestCollections.size() == countOfGreatestCollections) {
                 break;
             }
         }
@@ -135,7 +134,7 @@ public class CollectionService {
 
     private void addGreatestCollectionIntoTheList(List<String[]> greatestCollections, String[] greatestCollection,
                                                   List<String[]> sizeOfEveryCollection, int p) {
-        if (p == sizeOfEveryCollection.size() - 1 && greatestCollections.size() < COUNT_OF_GREATEST_COLLECTIONS) {
+        if (p == sizeOfEveryCollection.size() - 1) {
             greatestCollections.add(greatestCollection);
         }
     }
@@ -181,14 +180,34 @@ public class CollectionService {
     public List<Collection> getItemsByWord(String word) {
         List<Collection> itemsByWord = new ArrayList();
         List<Long> allIdOfCollections = new ArrayList();
-        allIdOfCollections.addAll(badgesTagsService.getIdForCollectionFromBadgesTagsByWord(word));
-        allIdOfCollections.addAll(booksTagsService.getIdForCollectionFromBooksTagsByWord(word));
-        allIdOfCollections.addAll(coinsTagsService.getIdForCollectionFromCoinsTagsByWord(word));
-        allIdOfCollections.addAll(stampsTagsService.getIdForCollectionFromStampsTagsByWord(word));
-        allIdOfCollections.addAll(wineTagsService.getIdForCollectionFromWineTagsByWord(word));
+        allIdOfCollections.addAll(badgesTagsService.getIdForCollectionFromBadgesTagsByWord(word.toLowerCase()));
+        allIdOfCollections.addAll(booksTagsService.getIdForCollectionFromBooksTagsByWord(word.toLowerCase()));
+        allIdOfCollections.addAll(coinsTagsService.getIdForCollectionFromCoinsTagsByWord(word.toLowerCase()));
+        allIdOfCollections.addAll(stampsTagsService.getIdForCollectionFromStampsTagsByWord(word.toLowerCase()));
+        allIdOfCollections.addAll(wineTagsService.getIdForCollectionFromWineTagsByWord(word.toLowerCase()));
         for(int i = 0; i < allIdOfCollections.size(); ++i) {
             itemsByWord.add(findItemById(allIdOfCollections.get(i)));
         }
         return itemsByWord;
+    }
+
+    public List<Collection> findItemsByTopicAndUserName(String topic, String userName){
+        return collectionRepository.findByTopicAndUserCollectionUsername(topic,userName);
+    }
+
+    public List<String[]> getCollectionsByUserName(String userName) {
+        int countOfGreatestCollections = findAllItems().size();
+        List<String[]> allCollections = getGreatestCollections(countOfGreatestCollections);
+        List<String[]> collectionsByUserName = new ArrayList();
+        for(int i = 0; i < allCollections.size(); ++i) {
+            if (allCollections.get(i)[LOGIN].equals(userName)) {
+                collectionsByUserName.add(allCollections.get(i));
+            }
+        }
+        return collectionsByUserName;
+    }
+
+    public List<Collection> getItemsByUserName(String userName) {
+        return collectionRepository.findCollectionByUserCollectionUsername(userName);
     }
 }

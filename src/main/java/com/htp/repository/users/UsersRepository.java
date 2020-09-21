@@ -12,4 +12,6 @@ public interface UsersRepository extends CrudRepository<Users, Long>, JpaReposit
     List<Users> findAll();
 
     Users findByUsername(String userName);
+
+    Users findUsersByMail(String mail);
 }

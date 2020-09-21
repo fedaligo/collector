@@ -3,6 +3,9 @@ package com.htp.entity.users;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.htp.entity.collection.Collection;
+import com.htp.entity.comments.Comments;
+import com.htp.entity.likes.Likes;
+import com.htp.entity.tags.BadgesTags;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +21,8 @@ import java.util.Set;
 
 @Data
 @RequiredArgsConstructor
-@EqualsAndHashCode(exclude = {"id","collections"})
-@ToString(exclude = {"collections"})
+@EqualsAndHashCode(exclude = {"id","collections","likes","comments"})
+@ToString(exclude = {"collections","likes","comments"})
 @Entity
 @Table(name = "users")
 public class Users{
@@ -44,4 +47,18 @@ public class Users{
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userCollection")
     private Set<Collection> collections = Collections.emptySet();
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true,
+            mappedBy = "usersLikes")
+    private Set<Likes> likes = Collections.emptySet();
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true,
+            mappedBy = "usersComments")
+    private Set<Comments> comments = Collections.emptySet();
 }

@@ -1,5 +1,6 @@
 package com.htp.service.tags;
 
+import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.StampsTags;
 import com.htp.repository.tags.StampsTagsRepository;
 import com.htp.service.AllService;
@@ -45,5 +46,16 @@ public class StampsTagsService {
             breakValue = NEXT;
         }
         return breakValue;
+    }
+
+    public List<String> findNameOfTagsByItemId(Long id){
+        List<String> namesOfTags = new ArrayList<>();
+        List<StampsTags> stamps = findAllStampsTags();
+        for(int i=0; i<stamps.size(); i++){
+            if(stamps.get(i).getStampsStampsTags().getCollectionStamps().getId() == id){
+                namesOfTags.add(stamps.get(i).getTagsStampsTags().getName());
+            }
+        }
+        return namesOfTags;
     }
 }

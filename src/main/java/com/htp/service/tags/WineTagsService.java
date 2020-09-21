@@ -1,5 +1,6 @@
 package com.htp.service.tags;
 
+import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.WineTags;
 import com.htp.repository.tags.WineTagsRepository;
 import com.htp.service.AllService;
@@ -47,5 +48,16 @@ public class WineTagsService {
             breakValue = NEXT;
         }
         return breakValue;
+    }
+
+    public List<String> findNameOfTagsByItemId(Long id){
+        List<String> namesOfTags = new ArrayList<>();
+        List<WineTags> wine = findAllWineTags();
+        for(int i=0; i<wine.size(); i++){
+            if(wine.get(i).getWineWineTags().getCollectionWine().getId() == id){
+                namesOfTags.add(wine.get(i).getTagsWineTags().getName());
+            }
+        }
+        return namesOfTags;
     }
 }

@@ -26,6 +26,10 @@ public class JwtUtil {
         return extractAllClaims(token).getExpiration();
     }
 
+    public String extractRole(String token){
+        return extractAllClaims(token).get(ROLES).toString();
+    }
+
     private Claims extractAllClaims(String token){
         return Jwts
                 .parser()

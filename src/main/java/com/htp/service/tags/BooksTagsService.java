@@ -1,5 +1,6 @@
 package com.htp.service.tags;
 
+import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.BooksTags;
 import com.htp.repository.tags.BooksTagsRepository;
 import com.htp.service.AllService;
@@ -46,5 +47,16 @@ public class BooksTagsService {
         }
 
         return breakValue;
+    }
+
+    public List<String> findNameOfTagsByItemId(Long id){
+        List<String> namesOfTags = new ArrayList<>();
+        List<BooksTags> books = findAllBooksTags();
+        for(int i=0; i<books.size(); i++){
+            if(books.get(i).getBooksBooksTags().getCollectionBooks().getId() == id){
+                namesOfTags.add(books.get(i).getTagsBooksTags().getName());
+            }
+        }
+        return namesOfTags;
     }
 }

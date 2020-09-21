@@ -15,4 +15,5 @@ public class BadgesService {
     public List<Badges> findAllBadges() {
         return badgesRepository.findAll();
     }
+
 }

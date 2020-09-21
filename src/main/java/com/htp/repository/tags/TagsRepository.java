@@ -1,5 +1,6 @@
 package com.htp.repository.tags;
 
+import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.Tags;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

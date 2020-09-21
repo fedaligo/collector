@@ -38,6 +38,7 @@ public class BadgesTagsService {
         int breakValue = CONTINUE;
         String info = badges.get(i).toString();
         info = allService.getOnlyInfoFromString(info);
+        System.out.println("INFO------"+ info);
         if (info.contains(word)) {
             if (saveIdForMappingByCollection.size() > 0) {
                 breakValue = allService.checkIdIsNotRepeated(saveIdForMappingByCollection, idValue);
@@ -46,5 +47,16 @@ public class BadgesTagsService {
             breakValue = NEXT;
         }
         return breakValue;
+    }
+
+    public List<String> findNameOfTagsByItemId(Long id){
+        List<String> namesOfTags = new ArrayList<>();
+        List<BadgesTags> badges = findAllBadgesTags();
+        for(int i=0; i<badges.size(); i++){
+            if(badges.get(i).getBadgesBadgesTags().getCollectionBadges().getId() == id){
+                namesOfTags.add(badges.get(i).getTagsBadgesTags().getName());
+            }
+        }
+        return namesOfTags;
     }
 }

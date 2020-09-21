@@ -1,6 +1,7 @@
 package com.htp.security.filters;
 
 import com.htp.security.util.JwtUtil;
+import com.htp.service.AllService;
 import com.htp.service.users.MyUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,18 +23,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final MyUserDetailsService myUserDetailsService;
     private final JwtUtil jwtUtil;
+    private final AllService allService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         final String authorizationHeader = httpServletRequest.getHeader("Authorization");
-        String[] info = getTokenFromHeaderAndUserNameFromToken(authorizationHeader);
+        String[] info = allService.getTokenFromHeaderAndUserNameFromToken(authorizationHeader);
         String userName = info[1];
         String jwt = info[0];
         checkUserNameAndContext(userName, jwt, httpServletRequest);
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-    private String[] getTokenFromHeaderAndUserNameFromToken(String authorizationHeader){
+    public String[] getTokenFromHeaderAndUserNameFromToken(String authorizationHeader){
         String[] info = new String[2];
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             info[0] = authorizationHeader.substring(15, authorizationHeader.length() - 2);

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.htp.entity.badges.Badges;
 import com.htp.entity.books.Books;
 import com.htp.entity.coins.Coins;
+import com.htp.entity.comments.Comments;
+import com.htp.entity.likes.Likes;
 import com.htp.entity.stamps.Stamps;
 import com.htp.entity.users.Users;
 import com.htp.entity.wine.Wine;
@@ -20,8 +22,8 @@ import java.util.Set;
 
 @Data
 @RequiredArgsConstructor
-@EqualsAndHashCode(exclude = {"id","badges","books","coins","stamps","wine"})
-@ToString(exclude = {"badges","books","coins","stamps","wine"})
+@EqualsAndHashCode(exclude = {"id","badges","books","coins","stamps","wine","likes","comments"})
+@ToString(exclude = {"badges","books","coins","stamps","wine","likes","comments"})
 @Entity
 @Table(name = "collection")
 public class Collection {
@@ -91,4 +93,18 @@ public class Collection {
             orphanRemoval = true,
             mappedBy = "collectionWine")
     private Set<Wine> wine = Collections.emptySet();
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true,
+            mappedBy = "collectionLikes")
+    private Set<Likes> likes = Collections.emptySet();
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = {CascadeType.ALL},
+            orphanRemoval = true,
+            mappedBy = "collectionComments")
+    private Set<Comments> comments = Collections.emptySet();
 }

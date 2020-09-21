@@ -14,4 +14,8 @@ public interface CollectionRepository extends CrudRepository<Collection, Long>, 
 
     @Query("select hu from Collection hu ORDER BY hu.id")
     List<Collection> findAll();
+
+    List<Collection> findCollectionByUserCollectionUsername(String userName);
+
+    List<Collection> findByTopicAndUserCollectionUsername(String topic, String userName);
 }

@@ -1,5 +1,6 @@
 package com.htp.service.tags;
 
+import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.CoinsTags;
 import com.htp.repository.tags.CoinsTagsRepository;
 import com.htp.service.AllService;
@@ -45,5 +46,16 @@ public class CoinsTagsService {
             breakValue = NEXT;
         }
         return breakValue;
+    }
+
+    public List<String> findNameOfTagsByItemId(Long id){
+        List<String> namesOfTags = new ArrayList<>();
+        List<CoinsTags> coins = findAllCoinsTags();
+        for(int i=0; i<coins.size(); i++){
+            if(coins.get(i).getCoinsCoinsTags().getCollectionCoins().getId() == id){
+                namesOfTags.add(coins.get(i).getTagsCoinsTags().getName());
+            }
+        }
+        return namesOfTags;
     }
 }

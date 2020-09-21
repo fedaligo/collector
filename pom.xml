@@ -16,7 +16,6 @@
     <description>Collector project for Spring Boot</description>
 
     <properties>
-        <java.version>14</java.version>
     </properties>
 
     <dependencies>

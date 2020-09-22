@@ -31,7 +31,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/users")
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"*"})
 public class UsersController {
     private final UsersService usersService;
     private final AuthenticationManager authenticationManager;

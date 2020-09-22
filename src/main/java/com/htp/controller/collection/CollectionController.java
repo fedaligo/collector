@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/collection")
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"*"})
 public class CollectionController {
     private static final int COUNT_OF_GREATEST_COLLECTIONS = 3;
     private final CollectionService collectionService;

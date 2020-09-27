@@ -1,7 +1,9 @@
 package com.htp.service.tags;
 
 import com.htp.entity.tags.BadgesTags;
+import com.htp.entity.tags.BooksTags;
 import com.htp.entity.tags.CoinsTags;
+import com.htp.entity.tags.Tags;
 import com.htp.repository.tags.CoinsTagsRepository;
 import com.htp.service.AllService;
 import java.util.ArrayList;
@@ -58,4 +60,36 @@ public class CoinsTagsService {
         }
         return namesOfTags;
     }
+
+    public List<Tags> findTagsByItemId(Long id){
+        List<Tags> tags = new ArrayList<>();
+        List<CoinsTags> coins = findAllCoinsTags();
+        for(int i=0; i<coins.size(); i++){
+            if(coins.get(i).getCoinsCoinsTags().getCollectionCoins().getId() == id){
+                tags.add(coins.get(i).getTagsCoinsTags());
+            }
+        }
+        return tags;
+    }
+
+    public CoinsTags findCoinsTagsByParameters(Long tagsId, Long coinsId){
+        return coinsTagsRepository.findCoinsTagsByParameters(tagsId, coinsId);
+    }
+
+    public List<CoinsTags> findCoinsTagsByCoinsId(Long coinsId){
+        return coinsTagsRepository.findCoinsTagsByCoinsId(coinsId);
+    }
+
+    public void deleteItem(Long id){
+        coinsTagsRepository.deleteCoinsTagsById(id);
+    }
+
+    public void saveItem(CoinsTags coinsTags){
+        coinsTagsRepository.saveAndFlush(coinsTags);
+    }
+
+    public void updateItem(CoinsTags coinsTags){
+        coinsTagsRepository.save(coinsTags);
+    }
+
 }

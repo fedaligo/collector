@@ -22,8 +22,18 @@ public class TagsController {
         return tagsService.getAllTags();
     }
 
+    @GetMapping({"/alltagsnames"})
+    public String[] getAllTagsNames() {
+        return tagsService.getAllTagsNames();
+    }
+
     @GetMapping({"/tagsnames"})
-    public List<String> getBadgesTags(@RequestParam Long id) {
+    public List<String> getTagsNamesByItemId(@RequestParam Long id) {
         return tagsService.getTagsNamesByItemId(id);
+    }
+
+    @GetMapping({"/tagsidbyitemid"})
+    public List<Long> getTagsIdByItemId(@RequestParam Long id) {
+        return tagsService.getTagsByItemId(id);
     }
 }

@@ -1,9 +1,11 @@
 package com.htp.controller.convert;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 
 public abstract class EntityConverter<S, R> implements Converter<S, R> {
     @PersistenceContext

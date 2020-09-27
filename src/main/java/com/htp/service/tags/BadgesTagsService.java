@@ -1,6 +1,8 @@
 package com.htp.service.tags;
 
 import com.htp.entity.tags.BadgesTags;
+import com.htp.entity.tags.Tags;
+import com.htp.entity.wine.Wine;
 import com.htp.repository.tags.BadgesTagsRepository;
 import com.htp.service.AllService;
 import java.util.ArrayList;
@@ -58,5 +60,36 @@ public class BadgesTagsService {
             }
         }
         return namesOfTags;
+    }
+
+    public List<Tags> findTagsByItemId(Long id){
+        List<Tags> tags = new ArrayList<>();
+        List<BadgesTags> badges = findAllBadgesTags();
+        for(int i=0; i<badges.size(); i++){
+            if(badges.get(i).getBadgesBadgesTags().getCollectionBadges().getId() == id){
+                tags.add(badges.get(i).getTagsBadgesTags());
+            }
+        }
+        return tags;
+    }
+
+    public BadgesTags findBadgesTagsByParameters(Long tagsId, Long badgesId){
+        return badgesTagsRepository.findBadgesTagsByParameters(tagsId, badgesId);
+    }
+
+    public List<BadgesTags> findBadgesTagsByBadgesId(Long badgesId){
+        return badgesTagsRepository.findBadgesTagsByBadgesId(badgesId);
+    }
+
+    public void deleteItem(Long id){
+        badgesTagsRepository.deleteBadgesTagsById(id);
+    }
+
+    public void saveItem(BadgesTags badgesTags){
+        badgesTagsRepository.saveAndFlush(badgesTags);
+    }
+
+    public void updateItem(BadgesTags badgesTags){
+        badgesTagsRepository.save(badgesTags);
     }
 }

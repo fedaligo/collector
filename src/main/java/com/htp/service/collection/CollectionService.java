@@ -1,16 +1,32 @@
 package com.htp.service.collection;
 
+import com.htp.controller.convert.badges.BadgesCreateRequestConverter;
+import com.htp.controller.convert.badges.badgestags.BadgesTagsCreateRequestConverter;
+import com.htp.controller.convert.collection.CollectionCreateRequestConverter;
+import com.htp.controller.convert.tags.TagsCreateRequestConverter;
+import com.htp.controller.requests.collection.CollectionCreateRequest;
+import com.htp.entity.badges.Badges;
+import com.htp.entity.books.Books;
+import com.htp.entity.coins.Coins;
 import com.htp.entity.collection.Collection;
+import com.htp.entity.stamps.Stamps;
+import com.htp.entity.tags.*;
+import com.htp.entity.users.Users;
+import com.htp.entity.wine.Wine;
 import com.htp.repository.collection.CollectionRepository;
-import com.htp.service.tags.BadgesTagsService;
-import com.htp.service.tags.BooksTagsService;
-import com.htp.service.tags.CoinsTagsService;
-import com.htp.service.tags.StampsTagsService;
-import com.htp.service.tags.WineTagsService;
+import com.htp.service.badges.BadgesService;
+import com.htp.service.books.BooksService;
+import com.htp.service.coins.CoinsService;
+import com.htp.service.stamps.StampsService;
+import com.htp.service.tags.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import com.htp.service.users.UsersService;
+import com.htp.service.wine.WineService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -26,11 +42,21 @@ public class CollectionService {
     private static final int COUNT_OF_LAST_ITEMS = 3;
 
     private final CollectionRepository collectionRepository;
+    private final BadgesService badgesService;
+    private final BooksService booksService;
+    private final CoinsService coinsService;
+    private final StampsService stampsService;
+    private final WineService wineService;
+    private final TagsService tagsService;
     private final BadgesTagsService badgesTagsService;
     private final BooksTagsService booksTagsService;
     private final CoinsTagsService coinsTagsService;
     private final StampsTagsService stampsTagsService;
     private final WineTagsService wineTagsService;
+    private final ConversionService conversionService;
+
+    //private final UsersService usersService;
+
 
     public List<Collection> findAllItems() {
         return collectionRepository.findAll();
@@ -210,4 +236,278 @@ public class CollectionService {
     public List<Collection> getItemsByUserName(String userName) {
         return collectionRepository.findCollectionByUserCollectionUsername(userName);
     }
+
+    public void deleteItem(Long id){
+        collectionRepository.deleteCollectionById(id);
+    }
+
+    public void saveBadgesItem(Collection collection, Badges badges, List<Tags> tags, List<BadgesTags> myBadgesTags){
+        collectionRepository.saveAndFlush(collection);
+        badges.setCollectionBadges(findItemById(collection.getId()));
+        badgesService.saveItem(badges);
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myBadgesTags.get(i).setBadgesBadgesTags(badgesService.findBadgesById(badges.getId()));
+            myBadgesTags.get(i).setTagsBadgesTags(tagsService.findTagsById(tags.get(i).getId()));
+            badgesTagsService.saveItem(myBadgesTags.get(i));
+        }
+    }
+    public void saveBooksItem(Collection collection, Books books, List<Tags> tags, List<BooksTags> myBooksTags){
+        collectionRepository.saveAndFlush(collection);
+        books.setCollectionBooks(findItemById(collection.getId()));
+        booksService.saveItem(books);
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myBooksTags.get(i).setBooksBooksTags(booksService.findBooksById(books.getId()));
+            myBooksTags.get(i).setTagsBooksTags(tagsService.findTagsById(tags.get(i).getId()));
+            booksTagsService.saveItem(myBooksTags.get(i));
+        }
+    }
+    public void saveCoinsItem(Collection collection, Coins coins, List<Tags> tags, List<CoinsTags> myCoinsTags){
+        collectionRepository.saveAndFlush(collection);
+        coins.setCollectionCoins(findItemById(collection.getId()));
+        coinsService.saveItem(coins);
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myCoinsTags.get(i).setCoinsCoinsTags(coinsService.findCoinsById(coins.getId()));
+            myCoinsTags.get(i).setTagsCoinsTags(tagsService.findTagsById(tags.get(i).getId()));
+            coinsTagsService.saveItem(myCoinsTags.get(i));
+        }
+    }
+    public void saveStampsItem(Collection collection, Stamps stamps, List<Tags> tags, List<StampsTags> myStampsTags){
+        collectionRepository.saveAndFlush(collection);
+        stamps.setCollectionStamps(findItemById(collection.getId()));
+        stampsService.saveItem(stamps);
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myStampsTags.get(i).setStampsStampsTags(stampsService.findStampsById(stamps.getId()));
+            myStampsTags.get(i).setTagsStampsTags(tagsService.findTagsById(tags.get(i).getId()));
+            stampsTagsService.saveItem(myStampsTags.get(i));
+        }
+    }
+    public void saveWineItem(Collection collection, Wine wine, List<Tags> tags, List<WineTags> myWineTags){
+        collectionRepository.saveAndFlush(collection);
+        wine.setCollectionWine(findItemById(collection.getId()));
+        wineService.saveItem(wine);
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myWineTags.get(i).setWineWineTags(wineService.findWineById(wine.getId()));
+            myWineTags.get(i).setTagsWineTags(tagsService.findTagsById(tags.get(i).getId()));
+            wineTagsService.saveItem(myWineTags.get(i));
+        }
+    }
+
+    public void updateBadgesItem(Collection collection, Badges badges, List<Tags> tags, List<BadgesTags> myBadgesTags){
+        collectionRepository.save(collection);
+        badges.setCollectionBadges(findItemById(collection.getId()));
+        badgesService.updateItem(badges);
+        myBadgesTags = saveTagsAndSetParametersForBadgesTags(badges, tags, myBadgesTags);
+        List<BadgesTags> oldBadgesTagsList = badgesTagsService.findBadgesTagsByBadgesId(badges.getId());
+        for(int p=0; p<oldBadgesTagsList.size(); p++){
+            iterateCollectionOfNewBadgesTagsAndDeleteOld(myBadgesTags, oldBadgesTagsList,p);
+        }
+        saveCollectionOfBadgesTags(myBadgesTags);
+
+    }
+
+    private List<BadgesTags> saveTagsAndSetParametersForBadgesTags(Badges badges, List<Tags> tags,
+                                                                   List<BadgesTags> myBadgesTags){
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myBadgesTags.get(i).setBadgesBadgesTags(badgesService.findBadgesById(badges.getId()));
+            myBadgesTags.get(i).setTagsBadgesTags(tagsService.findTagsById(tags.get(i).getId()));
+        }
+        return myBadgesTags;
+    }
+
+    private void iterateCollectionOfNewBadgesTagsAndDeleteOld(List<BadgesTags> myBadgesTags,
+                                                              List<BadgesTags> oldBadgesTagsList, int p){
+        for(int z=0; z<myBadgesTags.size(); z++){
+            if(oldBadgesTagsList.get(p).getId() == myBadgesTags.get(z).getId()){
+                break;
+            }
+            if(oldBadgesTagsList.get(p).getId() != myBadgesTags.get(z).getId() &&
+                    z == myBadgesTags.size() - 1){
+                badgesTagsService.deleteItem(oldBadgesTagsList.get(p).getId());
+            }
+        }
+    }
+
+    private void saveCollectionOfBadgesTags(List<BadgesTags> myBadgesTags){
+        for(int k=0; k<myBadgesTags.size(); k++){
+            badgesTagsService.saveItem(myBadgesTags.get(k));
+        }
+    }
+
+    public void updateBooksItem(Collection collection, Books books, List<Tags> tags, List<BooksTags> myBooksTags){
+        collectionRepository.save(collection);
+        books.setCollectionBooks(findItemById(collection.getId()));
+        booksService.updateItem(books);
+        myBooksTags = saveTagsAndSetParametersForBooksTags(books, tags, myBooksTags);
+        List<BooksTags> oldBooksTagsList = booksTagsService.findBooksTagsByBooksId(books.getId());
+        for(int p=0; p<oldBooksTagsList.size(); p++){
+            iterateCollectionOfNewBooksTagsAndDeleteOld(myBooksTags, oldBooksTagsList,p);
+        }
+        saveCollectionOfBooksTags(myBooksTags);
+
+    }
+
+    private List<BooksTags> saveTagsAndSetParametersForBooksTags(Books books, List<Tags> tags,
+                                                                 List<BooksTags> myBooksTags){
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myBooksTags.get(i).setBooksBooksTags(booksService.findBooksById(books.getId()));
+            myBooksTags.get(i).setTagsBooksTags(tagsService.findTagsById(tags.get(i).getId()));
+        }
+        return myBooksTags;
+    }
+
+    private void iterateCollectionOfNewBooksTagsAndDeleteOld(List<BooksTags> myBooksTags,
+                                                             List<BooksTags> oldBooksTagsList, int p){
+        for(int z=0; z<myBooksTags.size(); z++){
+            if(oldBooksTagsList.get(p).getId() == myBooksTags.get(z).getId()){
+                break;
+            }
+            if(oldBooksTagsList.get(p).getId() != myBooksTags.get(z).getId() &&
+                    z == myBooksTags.size() - 1){
+                booksTagsService.deleteItem(oldBooksTagsList.get(p).getId());
+            }
+        }
+    }
+
+    private void saveCollectionOfBooksTags(List<BooksTags> myBooksTags){
+        for(int k=0; k<myBooksTags.size(); k++){
+            booksTagsService.saveItem(myBooksTags.get(k));
+        }
+    }
+
+
+    public void updateCoinsItem(Collection collection, Coins coins, List<Tags> tags, List<CoinsTags> myCoinsTags){
+        collectionRepository.save(collection);
+        coins.setCollectionCoins(findItemById(collection.getId()));
+        coinsService.updateItem(coins);
+        myCoinsTags = saveTagsAndSetParametersForCoinsTags(coins, tags, myCoinsTags);
+        List<CoinsTags> oldCoinsTagsList = coinsTagsService.findCoinsTagsByCoinsId(coins.getId());
+        for(int p=0; p<oldCoinsTagsList.size(); p++){
+            iterateCollectionOfNewCoinsTagsAndDeleteOld(myCoinsTags, oldCoinsTagsList,p);
+        }
+        saveCollectionOfCoinsTags(myCoinsTags);
+
+    }
+
+    private List<CoinsTags> saveTagsAndSetParametersForCoinsTags(Coins coins, List<Tags> tags,
+                                                                 List<CoinsTags> myCoinsTags){
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myCoinsTags.get(i).setCoinsCoinsTags(coinsService.findCoinsById(coins.getId()));
+            myCoinsTags.get(i).setTagsCoinsTags(tagsService.findTagsById(tags.get(i).getId()));
+        }
+        return myCoinsTags;
+    }
+
+    private void iterateCollectionOfNewCoinsTagsAndDeleteOld(List<CoinsTags> myCoinsTags,
+                                                             List<CoinsTags> oldCoinsTagsList, int p){
+        for(int z=0; z<myCoinsTags.size(); z++){
+            if(oldCoinsTagsList.get(p).getId() == myCoinsTags.get(z).getId()){
+                break;
+            }
+            if(oldCoinsTagsList.get(p).getId() != myCoinsTags.get(z).getId() &&
+                    z == myCoinsTags.size() - 1){
+                coinsTagsService.deleteItem(oldCoinsTagsList.get(p).getId());
+            }
+        }
+    }
+
+    private void saveCollectionOfCoinsTags(List<CoinsTags> myCoinsTags){
+        for(int k=0; k<myCoinsTags.size(); k++){
+            coinsTagsService.saveItem(myCoinsTags.get(k));
+        }
+    }
+
+
+    public void updateStampsItem(Collection collection, Stamps stamps, List<Tags> tags, List<StampsTags> myStampsTags){
+        collectionRepository.save(collection);
+        stamps.setCollectionStamps(findItemById(collection.getId()));
+        stampsService.updateItem(stamps);
+        myStampsTags = saveTagsAndSetParametersForStampsTags(stamps, tags, myStampsTags);
+        List<StampsTags> oldStampsTagsList = stampsTagsService.findStampsTagsByStampsId(stamps.getId());
+        for(int p=0; p<oldStampsTagsList.size(); p++){
+            iterateCollectionOfNewStampsTagsAndDeleteOld(myStampsTags, oldStampsTagsList,p);
+        }
+        saveCollectionOfStampsTags(myStampsTags);
+
+    }
+
+    private List<StampsTags> saveTagsAndSetParametersForStampsTags(Stamps stamps, List<Tags> tags,
+                                                                   List<StampsTags> myStampsTags){
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myStampsTags.get(i).setStampsStampsTags(stampsService.findStampsById(stamps.getId()));
+            myStampsTags.get(i).setTagsStampsTags(tagsService.findTagsById(tags.get(i).getId()));
+        }
+        return myStampsTags;
+    }
+
+    private void iterateCollectionOfNewStampsTagsAndDeleteOld(List<StampsTags> myStampsTags,
+                                                              List<StampsTags> oldStampsTagsList, int p){
+        for(int z=0; z<myStampsTags.size(); z++){
+            if(oldStampsTagsList.get(p).getId() == myStampsTags.get(z).getId()){
+                break;
+            }
+            if(oldStampsTagsList.get(p).getId() != myStampsTags.get(z).getId() &&
+                    z == myStampsTags.size() - 1){
+                stampsTagsService.deleteItem(oldStampsTagsList.get(p).getId());
+            }
+        }
+    }
+
+    private void saveCollectionOfStampsTags(List<StampsTags> myStampsTags){
+        for(int k=0; k<myStampsTags.size(); k++){
+            stampsTagsService.saveItem(myStampsTags.get(k));
+        }
+    }
+
+
+    public void updateWineItem(Collection collection, Wine wine, List<Tags> tags, List<WineTags> myWineTags){
+        collectionRepository.save(collection);
+        wine.setCollectionWine(findItemById(collection.getId()));
+        wineService.updateItem(wine);
+        myWineTags = saveTagsAndSetParametersForWineTags(wine, tags, myWineTags);
+        List<WineTags> oldWineTagsList = wineTagsService.findWineTagsByWineId(wine.getId());
+        for(int p=0; p<oldWineTagsList.size(); p++){
+            iterateCollectionOfNewWineTagsAndDeleteOld(myWineTags, oldWineTagsList,p);
+        }
+        saveCollectionOfWineTags(myWineTags);
+
+    }
+
+    private List<WineTags> saveTagsAndSetParametersForWineTags(Wine wine, List<Tags> tags,
+                                                               List<WineTags> myWineTags){
+        for(int i=0; i<tags.size(); i++){
+            tagsService.saveItem(tags.get(i));
+            myWineTags.get(i).setWineWineTags(wineService.findWineById(wine.getId()));
+            myWineTags.get(i).setTagsWineTags(tagsService.findTagsById(tags.get(i).getId()));
+        }
+        return myWineTags;
+    }
+
+    private void iterateCollectionOfNewWineTagsAndDeleteOld(List<WineTags> myWineTags,
+                                                            List<WineTags> oldWineTagsList, int p){
+        for(int z=0; z<myWineTags.size(); z++){
+            if(oldWineTagsList.get(p).getId() == myWineTags.get(z).getId()){
+                break;
+            }
+            if(oldWineTagsList.get(p).getId() != myWineTags.get(z).getId() &&
+                    z == myWineTags.size() - 1){
+                wineTagsService.deleteItem(oldWineTagsList.get(p).getId());
+            }
+        }
+    }
+
+    private void saveCollectionOfWineTags(List<WineTags> myWineTags){
+        for(int k=0; k<myWineTags.size(); k++){
+            wineTagsService.saveItem(myWineTags.get(k));
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package com.htp.service.tags;
 
 import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.BooksTags;
+import com.htp.entity.tags.Tags;
 import com.htp.repository.tags.BooksTagsRepository;
 import com.htp.service.AllService;
 import java.util.ArrayList;
@@ -59,4 +60,35 @@ public class BooksTagsService {
         }
         return namesOfTags;
     }
+    public List<Tags> findTagsByItemId(Long id){
+        List<Tags> tags = new ArrayList<>();
+        List<BooksTags> books = findAllBooksTags();
+        for(int i=0; i<books.size(); i++){
+            if(books.get(i).getBooksBooksTags().getCollectionBooks().getId() == id){
+                tags.add(books.get(i).getTagsBooksTags());
+            }
+        }
+        return tags;
+    }
+
+    public BooksTags findBooksTagsByParameters(Long tagsId, Long booksId){
+        return booksTagsRepository.findBooksTagsByParameters(tagsId, booksId);
+    }
+
+    public List<BooksTags> findBooksTagsByBooksId(Long booksId){
+        return booksTagsRepository.findBooksTagsByBooksId(booksId);
+    }
+
+    public void deleteItem(Long id){
+        booksTagsRepository.deleteBooksTagsById(id);
+    }
+
+    public void saveItem(BooksTags booksTags){
+        booksTagsRepository.saveAndFlush(booksTags);
+    }
+
+    public void updateItem(BooksTags booksTags){
+        booksTagsRepository.save(booksTags);
+    }
+
 }

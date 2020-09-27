@@ -1,6 +1,8 @@
 package com.htp.service.tags;
 
 import com.htp.entity.tags.BadgesTags;
+import com.htp.entity.tags.StampsTags;
+import com.htp.entity.tags.Tags;
 import com.htp.entity.tags.WineTags;
 import com.htp.repository.tags.WineTagsRepository;
 import com.htp.service.AllService;
@@ -60,4 +62,37 @@ public class WineTagsService {
         }
         return namesOfTags;
     }
+
+    public List<Tags> findTagsByItemId(Long id){
+        List<Tags> tags = new ArrayList<>();
+        List<WineTags> wine = findAllWineTags();
+        for(int i=0; i<wine.size(); i++){
+            if(wine.get(i).getWineWineTags().getCollectionWine().getId() == id){
+                tags.add(wine.get(i).getTagsWineTags());
+            }
+        }
+        return tags;
+    }
+
+
+    public WineTags findWineTagsByParameters(Long tagsId, Long wineId){
+        return wineTagsRepository.findWineTagsByParameters(tagsId, wineId);
+    }
+
+    public List<WineTags> findWineTagsByWineId(Long wineId){
+        return wineTagsRepository.findWineTagsByWineId(wineId);
+    }
+
+    public void deleteItem(Long id){
+        wineTagsRepository.deleteWineTagsById(id);
+    }
+
+    public void saveItem(WineTags wineTags){
+        wineTagsRepository.saveAndFlush(wineTags);
+    }
+
+    public void updateItem(WineTags wineTags){
+        wineTagsRepository.save(wineTags);
+    }
+
 }

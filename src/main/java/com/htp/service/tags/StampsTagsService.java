@@ -1,7 +1,9 @@
 package com.htp.service.tags;
 
 import com.htp.entity.tags.BadgesTags;
+import com.htp.entity.tags.CoinsTags;
 import com.htp.entity.tags.StampsTags;
+import com.htp.entity.tags.Tags;
 import com.htp.repository.tags.StampsTagsRepository;
 import com.htp.service.AllService;
 import java.util.ArrayList;
@@ -58,4 +60,36 @@ public class StampsTagsService {
         }
         return namesOfTags;
     }
+
+    public List<Tags> findTagsByItemId(Long id){
+        List<Tags> tags = new ArrayList<>();
+        List<StampsTags> stamps = findAllStampsTags();
+        for(int i=0; i<stamps.size(); i++){
+            if(stamps.get(i).getStampsStampsTags().getCollectionStamps().getId() == id){
+                tags.add(stamps.get(i).getTagsStampsTags());
+            }
+        }
+        return tags;
+    }
+
+    public StampsTags findStampsTagsByParameters(Long tagsId, Long stampsId){
+        return stampsTagsRepository.findStampsTagsByParameters(tagsId, stampsId);
+    }
+
+    public List<StampsTags> findStampsTagsByStampsId(Long stampsId){
+        return stampsTagsRepository.findStampsTagsByStampsId(stampsId);
+    }
+
+    public void deleteItem(Long id){
+        stampsTagsRepository.deleteStampsTagsById(id);
+    }
+
+    public void saveItem(StampsTags stampsTags){
+        stampsTagsRepository.saveAndFlush(stampsTags);
+    }
+
+    public void updateItem(StampsTags stampsTags){
+        stampsTagsRepository.save(stampsTags);
+    }
+
 }

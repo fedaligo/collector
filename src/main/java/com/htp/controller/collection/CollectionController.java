@@ -133,13 +133,6 @@ public class CollectionController {
         return collectionService.findItemsByTopicAndUserName(topic, username);
     }
 
-    /*@PutMapping("/updateitem")
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<?> updateItem(@RequestBody @Valid CollectionUpdateRequest request) {
-        collectionService.updateItem(conversionService.convert(request, Collection.class));
-        return ResponseEntity.ok("Item was updated");
-    }*/
-
     @PutMapping("/updatebadges")
     @Transactional(rollbackFor = {Exception.class})
     public ResponseEntity<?> updateBadges(@RequestBody @Valid CollectionUpdateRequest request) {
@@ -302,3 +295,4 @@ public class CollectionController {
         return ResponseEntity.ok("Item was deleted");
     }
 }
+

@@ -1,5 +1,7 @@
 package com.htp.controller;
 
+import com.htp.controller.convert.collection.CollectionCreateRequestConverter;
+import com.htp.controller.convert.comments.CommentsCreateRequestConverter;
 import com.htp.controller.requests.comments.CommentsCreateRequest;
 import com.htp.controller.requests.likes.LikesCreateRequest;
 import com.htp.controller.requests.users.UserCreateRequest;
@@ -24,6 +26,7 @@ public class CommentsController {
 
     private final CommentsService commentsService;
     private final ConversionService conversionService;
+    private final CommentsCreateRequestConverter converter;
 
     @GetMapping("/allcomments")
     public List<Comments> getAllComments() {
@@ -43,7 +46,7 @@ public class CommentsController {
     @PostMapping("/addcomment")
     @Transactional(rollbackFor = {Exception.class})
     public ResponseEntity<?> createNewComment(@RequestBody @Valid CommentsCreateRequest request) {
-        commentsService.addCommentForThisItemFromCurrentUser(conversionService.convert(request, Comments.class));
+        commentsService.addCommentForThisItemFromCurrentUser(converter.convert(request));
         return ResponseEntity.ok("Comment was successfully created");
     }
 

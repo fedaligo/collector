@@ -1,5 +1,7 @@
 package com.htp.controller;
 
+import com.htp.controller.convert.collection.CollectionCreateRequestConverter;
+import com.htp.controller.convert.likes.LikesCreateRequestConverter;
 import com.htp.controller.requests.likes.LikesCreateRequest;
 import com.htp.controller.requests.users.UserCreateRequest;
 import com.htp.entity.likes.Likes;
@@ -21,11 +23,12 @@ public class LikesController {
 
     private final LikesService likesService;
     private final ConversionService conversionService;
+    private final LikesCreateRequestConverter converter;
 
     @PostMapping("/addlike")
     @Transactional(rollbackFor = {Exception.class})
     public ResponseEntity<?> createNewLike(@RequestBody @Valid LikesCreateRequest request) {
-        likesService.addLikeForThisItemFromCurrentUser(conversionService.convert(request, Likes.class));
+        likesService.addLikeForThisItemFromCurrentUser(converter.convert(request));
         return ResponseEntity.ok("Like was successfully created");
     }
 

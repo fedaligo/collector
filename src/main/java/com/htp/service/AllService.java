@@ -44,7 +44,4 @@ public class AllService {
         }
         return info;
     }
-
-
-
 }

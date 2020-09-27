@@ -22,16 +22,6 @@ public class CommentsService {
         return commentsRepository.findAll();
     }
 
-    public boolean isItemHasCommentsFromCurrentUser(Long itemId, String authorizationHeader){
-        List<Comments> allComments = findAllComments();
-        for(int i=0; i<allComments.size(); i++){
-            if(areTheSameUsersNames(allComments, i, authorizationHeader) && areTheSameItemsId(itemId, allComments, i)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public List<Comments> findCommentsByItemId(Long itemId){
         List<Comments> allComments = findAllComments();
         List<Comments> allCommentsByItemId = new ArrayList<>();
@@ -60,11 +50,6 @@ public class CommentsService {
 
     public void deleteCommentForThisItemFromCurrentUser(Long commentId){
                 commentsRepository.deleteCommentsById(commentId);
-    }
-
-    private boolean areTheSameUsersNames(List<Comments> allComments, int i, String authorizationHeader){
-        return allService.getTokenFromHeaderAndUserNameFromToken(authorizationHeader)[1]
-                .equals(allComments.get(i).getUsersComments().getUsername());
     }
 
     private boolean areTheSameItemsId(Long itemId, List<Comments> allComments, int i){

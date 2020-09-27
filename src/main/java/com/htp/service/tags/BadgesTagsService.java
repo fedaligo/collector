@@ -40,7 +40,6 @@ public class BadgesTagsService {
         int breakValue = CONTINUE;
         String info = badges.get(i).toString();
         info = allService.getOnlyInfoFromString(info);
-        System.out.println("INFO------"+ info);
         if (info.contains(word)) {
             if (saveIdForMappingByCollection.size() > 0) {
                 breakValue = allService.checkIdIsNotRepeated(saveIdForMappingByCollection, idValue);

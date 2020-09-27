@@ -1,8 +1,6 @@
 package com.htp.service.books;
 
-import com.htp.entity.badges.Badges;
 import com.htp.entity.books.Books;
-import com.htp.entity.tags.Tags;
 import com.htp.repository.books.BooksRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.htp.controller.users;
+package com.htp.controller;
 
 import com.htp.controller.requests.users.UserCreateRequest;
 import com.htp.controller.requests.users.UserUpdateRequest;
@@ -33,6 +33,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequestMapping(value = "/users")
 @CrossOrigin(origins = {"*"})
 public class UsersController {
+
     private final UsersService usersService;
     private final AuthenticationManager authenticationManager;
     private final MyUserDetailsService myUserDetailsService;
@@ -79,7 +80,6 @@ public class UsersController {
         }
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getUserName());
         final String jwt = jwtUtil.generateToken(userDetails);
-
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 

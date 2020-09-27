@@ -1,20 +1,12 @@
 package com.htp.controller.convert.coins.coinstags;
 
 
-import com.htp.controller.requests.coins.coinstags.CoinsTagsUpdateRequest;
 import com.htp.controller.requests.collection.CollectionUpdateRequest;
-import com.htp.entity.collection.Collection;
-import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.CoinsTags;
-import com.htp.exceptions.EntityNotFoundException;
-import com.htp.service.coins.CoinsService;
-import com.htp.service.tags.BadgesTagsService;
 import com.htp.service.tags.CoinsTagsService;
 import com.htp.service.tags.TagsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import static java.util.Optional.ofNullable;
 
 @Component
 @RequiredArgsConstructor

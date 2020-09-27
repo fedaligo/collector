@@ -3,11 +3,7 @@ package com.htp.controller.convert.collection;
 import com.htp.controller.requests.collection.CollectionUpdateRequest;
 import com.htp.entity.collection.Collection;
 import com.htp.exceptions.EntityNotFoundException;
-import com.htp.service.tags.TagsService;
 import com.htp.service.users.UsersService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import static java.util.Optional.ofNullable;

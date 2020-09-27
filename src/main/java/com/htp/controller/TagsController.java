@@ -1,21 +1,19 @@
-package com.htp.controller.tags;
+package com.htp.controller;
 
-import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.Tags;
-import com.htp.service.tags.BadgesTagsService;
 import com.htp.service.tags.TagsService;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/tags")
 @CrossOrigin(origins = {"*"})
 public class TagsController {
+
     private final TagsService tagsService;
-    private final BadgesTagsService badgesTagsService;
 
     @GetMapping({"/alltags"})
     public List<Tags> getAllTags() {

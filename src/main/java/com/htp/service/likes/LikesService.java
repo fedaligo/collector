@@ -1,6 +1,5 @@
 package com.htp.service.likes;
 
-import com.htp.entity.comments.Comments;
 import com.htp.entity.likes.Likes;
 import com.htp.repository.likes.LikesRepository;
 import com.htp.service.AllService;

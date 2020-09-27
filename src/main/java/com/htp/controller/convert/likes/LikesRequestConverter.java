@@ -2,7 +2,6 @@ package com.htp.controller.convert.likes;
 
 import com.htp.controller.convert.EntityConverter;
 import com.htp.controller.requests.likes.LikesCreateRequest;
-import com.htp.controller.requests.users.UserCreateRequest;
 import com.htp.entity.collection.Collection;
 import com.htp.entity.likes.Likes;
 import com.htp.entity.users.Users;

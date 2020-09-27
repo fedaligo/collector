@@ -1,17 +1,11 @@
 package com.htp.service.collection;
 
-import com.htp.controller.convert.badges.BadgesCreateRequestConverter;
-import com.htp.controller.convert.badges.badgestags.BadgesTagsCreateRequestConverter;
-import com.htp.controller.convert.collection.CollectionCreateRequestConverter;
-import com.htp.controller.convert.tags.TagsCreateRequestConverter;
-import com.htp.controller.requests.collection.CollectionCreateRequest;
 import com.htp.entity.badges.Badges;
 import com.htp.entity.books.Books;
 import com.htp.entity.coins.Coins;
 import com.htp.entity.collection.Collection;
 import com.htp.entity.stamps.Stamps;
 import com.htp.entity.tags.*;
-import com.htp.entity.users.Users;
 import com.htp.entity.wine.Wine;
 import com.htp.repository.collection.CollectionRepository;
 import com.htp.service.badges.BadgesService;
@@ -19,15 +13,13 @@ import com.htp.service.books.BooksService;
 import com.htp.service.coins.CoinsService;
 import com.htp.service.stamps.StampsService;
 import com.htp.service.tags.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import com.htp.service.users.UsersService;
 import com.htp.service.wine.WineService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -55,9 +47,6 @@ public class CollectionService {
     private final WineTagsService wineTagsService;
     private final ConversionService conversionService;
 
-    //private final UsersService usersService;
-
-
     public List<Collection> findAllItems() {
         return collectionRepository.findAll();
     }
@@ -69,7 +58,6 @@ public class CollectionService {
     private List<String[]> getSizeOfEveryCollection() {
         List<Collection> allItems = findAllItems();
         List<String[]> usersCollectionSize = new ArrayList();
-
         for(int i = 0; i < allItems.size(); ++i) {
             int breakValue = checkTheSizeOfCollectionAndSetBreakValue(allItems, usersCollectionSize, i);
             if (breakValue != NEXT) {
@@ -424,7 +412,6 @@ public class CollectionService {
         }
     }
 
-
     public void updateStampsItem(Collection collection, Stamps stamps, List<Tags> tags, List<StampsTags> myStampsTags){
         collectionRepository.save(collection);
         stamps.setCollectionStamps(findItemById(collection.getId()));
@@ -509,5 +496,4 @@ public class CollectionService {
             wineTagsService.saveItem(myWineTags.get(k));
         }
     }
-
 }

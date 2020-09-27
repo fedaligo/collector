@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
-public class UsersService /*implements ReactiveUserDetailsService*/ {
+public class UsersService {
     private final UsersRepository usersRepository;
     private final AllService allService;
     private final CollectionService collectionService;
@@ -23,18 +23,8 @@ public class UsersService /*implements ReactiveUserDetailsService*/ {
         return usersRepository.findAll();
     }
 
-    public Users register(Users users){
-        users.setPassword(users.getPassword());
-        users.setRole("ROLE_USER");
-        return usersRepository.save(users);
-    }
-
     public Users findByUserName(String userName){
         return usersRepository.findByUsername(userName);
-    }
-
-    public Users findById(Long id){
-        return usersRepository.findById(id).orElse(null);
     }
 
     public void deleteUser(Long id){
@@ -57,7 +47,6 @@ public class UsersService /*implements ReactiveUserDetailsService*/ {
     }
 
     public String updateUser(Users users){
-
         if(checkUserNameIsExist(users.getUsername())){
             return "User with this userName is already exist";
         }
@@ -69,7 +58,7 @@ public class UsersService /*implements ReactiveUserDetailsService*/ {
         }
     }
 
-    public boolean checkUserNameIsExist(String userName){
+    private boolean checkUserNameIsExist(String userName){
         Users user = usersRepository.findByUsername(userName);
         if(user == null){
             return false;
@@ -77,7 +66,7 @@ public class UsersService /*implements ReactiveUserDetailsService*/ {
         return true;
     }
 
-    public boolean checkMailIsExist(String mail){
+    private boolean checkMailIsExist(String mail){
         Users user = usersRepository.findUsersByMail(mail);
         if(user == null){
             return false;

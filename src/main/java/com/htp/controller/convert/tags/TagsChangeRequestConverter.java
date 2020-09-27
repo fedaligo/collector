@@ -1,20 +1,14 @@
 package com.htp.controller.convert.tags;
 
-import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.Tags;
 import com.htp.service.tags.TagsService;
 import org.springframework.stereotype.Component;
 
-import static java.util.Optional.ofNullable;
-
 @Component
 public class TagsChangeRequestConverter extends TagsRequestConverter<String, Tags> {
 
-    private final TagsService tagsService;
-
-    public TagsChangeRequestConverter(TagsService tagsService, TagsService tagsService1) {
+    public TagsChangeRequestConverter(TagsService tagsService) {
         super(tagsService);
-        this.tagsService = tagsService1;
     }
 
     @Override

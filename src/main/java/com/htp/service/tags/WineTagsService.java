@@ -1,16 +1,14 @@
 package com.htp.service.tags;
 
-import com.htp.entity.tags.BadgesTags;
-import com.htp.entity.tags.StampsTags;
 import com.htp.entity.tags.Tags;
 import com.htp.entity.tags.WineTags;
 import com.htp.repository.tags.WineTagsRepository;
 import com.htp.service.AllService;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -33,7 +31,6 @@ public class WineTagsService {
                 saveIdForMappingByCollection.add(idValue);
             }
         }
-
         return saveIdForMappingByCollection;
     }
 

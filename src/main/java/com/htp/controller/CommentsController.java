@@ -1,16 +1,10 @@
 package com.htp.controller;
 
-import com.htp.controller.convert.collection.CollectionCreateRequestConverter;
 import com.htp.controller.convert.comments.CommentsCreateRequestConverter;
 import com.htp.controller.requests.comments.CommentsCreateRequest;
-import com.htp.controller.requests.likes.LikesCreateRequest;
-import com.htp.controller.requests.users.UserCreateRequest;
 import com.htp.entity.comments.Comments;
-import com.htp.entity.users.Users;
 import com.htp.service.comments.CommentsService;
-import com.htp.service.likes.LikesService;
 import lombok.AllArgsConstructor;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +19,6 @@ import java.util.List;
 public class CommentsController {
 
     private final CommentsService commentsService;
-    private final ConversionService conversionService;
     private final CommentsCreateRequestConverter converter;
 
     @GetMapping("/allcomments")

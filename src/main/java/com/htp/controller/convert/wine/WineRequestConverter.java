@@ -2,9 +2,6 @@ package com.htp.controller.convert.wine;
 
 import com.htp.controller.convert.EntityConverter;
 import com.htp.controller.requests.collection.CollectionCreateRequest;
-import com.htp.controller.requests.wine.WineCreateRequest;
-
-import com.htp.entity.tags.WineTags;
 import com.htp.entity.wine.Wine;
 import com.htp.service.collection.CollectionService;
 import lombok.RequiredArgsConstructor;

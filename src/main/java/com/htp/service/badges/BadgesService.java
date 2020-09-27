@@ -14,10 +14,6 @@ import org.springframework.stereotype.Service;
 public class BadgesService {
     private final BadgesRepository badgesRepository;
 
-    public List<Badges> findAllBadges() {
-        return badgesRepository.findAll();
-    }
-
     public Badges findBadgesById(Long id){
         return badgesRepository.findById(id).orElse(null);
     }

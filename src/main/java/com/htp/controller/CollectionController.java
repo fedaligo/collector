@@ -1,4 +1,4 @@
-package com.htp.controller.collection;
+package com.htp.controller;
 
 import com.htp.controller.convert.badges.BadgesChangeRequestConverter;
 import com.htp.controller.convert.badges.BadgesCreateRequestConverter;
@@ -57,9 +57,9 @@ import javax.validation.Valid;
 @RequestMapping(value = "/collection")
 @CrossOrigin(origins = {"*"})
 public class CollectionController {
+
     private static final int COUNT_OF_GREATEST_COLLECTIONS = 3;
     private final CollectionService collectionService;
-    private final ConversionService conversionService;
 
     private final CollectionCreateRequestConverter converter;
     private final BadgesCreateRequestConverter badgesConverter;
@@ -73,7 +73,6 @@ public class CollectionController {
     private final CoinsTagsCreateRequestConverter coinsTagsConverter;
     private final StampsTagsCreateRequestConverter stampsTagsConverter;
     private final WineTagsCreateRequestConverter wineTagsConverter;
-
     private final CollectionChangeRequestConverter converterUpdate;
     private final BadgesChangeRequestConverter badgesConverterUpdate;
     private final BooksChangeRequestConverter booksConverterUpdate;
@@ -295,4 +294,3 @@ public class CollectionController {
         return ResponseEntity.ok("Item was deleted");
     }
 }
-

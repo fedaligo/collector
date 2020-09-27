@@ -27,7 +27,6 @@ public class MyUserDetailsService implements UserDetailsService {
         }
         UserDetails user = new User(myUser.getUsername(), myUser.getPassword(),
                 AuthorityUtils.commaSeparatedStringToAuthorityList(myUser.getRole()));
-        System.out.println(user);
         return user;
     }
 }

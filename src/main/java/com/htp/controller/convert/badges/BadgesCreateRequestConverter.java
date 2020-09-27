@@ -1,11 +1,8 @@
 package com.htp.controller.convert.badges;
 
 
-import com.htp.controller.requests.badges.BadgesCreateRequest;
 import com.htp.controller.requests.collection.CollectionCreateRequest;
 import com.htp.entity.badges.Badges;
-import com.htp.entity.collection.Collection;
-import com.htp.entity.tags.BadgesTags;
 import com.htp.service.collection.CollectionService;
 import org.springframework.stereotype.Component;
 

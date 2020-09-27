@@ -64,7 +64,6 @@ public class JwtUtil {
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-
     private List<String> getEncryptedRoles(UserDetails userDetails){
         return userDetails.getAuthorities().
                 stream()

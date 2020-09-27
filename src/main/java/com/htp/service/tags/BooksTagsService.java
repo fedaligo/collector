@@ -1,15 +1,14 @@
 package com.htp.service.tags;
 
-import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.BooksTags;
 import com.htp.entity.tags.Tags;
 import com.htp.repository.tags.BooksTagsRepository;
 import com.htp.service.AllService;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -60,6 +59,7 @@ public class BooksTagsService {
         }
         return namesOfTags;
     }
+
     public List<Tags> findTagsByItemId(Long id){
         List<Tags> tags = new ArrayList<>();
         List<BooksTags> books = findAllBooksTags();

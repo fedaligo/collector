@@ -1,9 +1,6 @@
 package com.htp.service.stamps;
 
-import com.htp.entity.books.Books;
-import com.htp.entity.coins.Coins;
 import com.htp.entity.stamps.Stamps;
-import com.htp.repository.books.BooksRepository;
 import com.htp.repository.stamps.StampsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

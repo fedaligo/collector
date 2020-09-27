@@ -1,16 +1,12 @@
 package com.htp.service.tags;
 
-import com.htp.entity.tags.BadgesTags;
 import com.htp.entity.tags.Tags;
-import com.htp.entity.wine.Wine;
-import com.htp.exceptions.EntityNotFoundException;
 import com.htp.repository.tags.TagsRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
@@ -57,13 +53,6 @@ public class TagsService {
             allTagsId.add(allTagsById.get(i).getId());
         }
         return allTagsId;
-    }
-
-    public Long saveTagAndGetId(String tagName){
-        Tags tags = new Tags();
-        tags.setName(tagName);
-        tagsRepository.saveAndFlush(tags);
-        return tagsRepository.findTagsByName(tagName).getId();
     }
 
     public Tags getTagsByName(String name){

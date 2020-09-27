@@ -1,11 +1,7 @@
 package com.htp.controller.convert.tags;
 
 import com.htp.controller.convert.EntityConverter;
-import com.htp.controller.requests.collection.CollectionCreateRequest;
-import com.htp.controller.requests.tags.TagsCreateRequest;
-
 import com.htp.entity.tags.Tags;
-import com.htp.entity.tags.WineTags;
 import com.htp.service.tags.TagsService;
 import lombok.RequiredArgsConstructor;
 
@@ -14,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public abstract class TagsRequestConverter<S, T> extends EntityConverter<S, T> {
 
-    private final TagsService tagsService;
+    protected final TagsService tagsService;
 
     protected Tags doConvert(Tags tags, String tagsName) {
         List<Tags> allTags = tagsService.getAllTags();

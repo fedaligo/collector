@@ -10,15 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BadgesTagsRepository extends CrudRepository<BadgesTags, Long>, JpaRepository<BadgesTags,Long> {
+
     Optional<BadgesTags> findById(Long id);
 
     @Modifying
     @Query("delete from BadgesTags hu where hu.id=:id")
     void deleteBadgesTagsById(Long id);
 
-
-    @Query("select hu from BadgesTags hu where hu.badgesBadgesTags.id=:badgesId AND " +
-            "hu.tagsBadgesTags.id=:tagsId")
+    @Query("select hu from BadgesTags hu where hu.badgesBadgesTags.id=:badgesId AND hu.tagsBadgesTags.id=:tagsId")
     BadgesTags findBadgesTagsByParameters(Long tagsId, Long badgesId);
 
     @Query("select hu from BadgesTags hu where hu.badgesBadgesTags.id=:badgesId")

@@ -3,7 +3,6 @@ package com.htp.controller.convert.collection;
 import com.htp.controller.convert.EntityConverter;
 import com.htp.controller.requests.collection.CollectionCreateRequest;
 import com.htp.entity.collection.Collection;
-import com.htp.service.tags.TagsService;
 import com.htp.service.users.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

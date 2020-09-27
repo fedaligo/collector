@@ -1,11 +1,8 @@
 package com.htp.controller.convert.coins;
 
 import com.htp.controller.convert.EntityConverter;
-import com.htp.controller.requests.coins.CoinsCreateRequest;
-import com.htp.controller.requests.coins.coinstags.CoinsTagsCreateRequest;
 import com.htp.controller.requests.collection.CollectionCreateRequest;
 import com.htp.entity.coins.Coins;
-import com.htp.entity.tags.CoinsTags;
 import com.htp.service.collection.CollectionService;
 import lombok.RequiredArgsConstructor;
 

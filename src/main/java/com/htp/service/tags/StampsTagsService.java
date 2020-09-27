@@ -1,16 +1,14 @@
 package com.htp.service.tags;
 
-import com.htp.entity.tags.BadgesTags;
-import com.htp.entity.tags.CoinsTags;
 import com.htp.entity.tags.StampsTags;
 import com.htp.entity.tags.Tags;
 import com.htp.repository.tags.StampsTagsRepository;
 import com.htp.service.AllService;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @Service

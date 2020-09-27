@@ -4,7 +4,6 @@ import com.htp.controller.requests.users.UserUpdateRequest;
 import com.htp.entity.users.Users;
 import com.htp.exceptions.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import static java.util.Optional.ofNullable;

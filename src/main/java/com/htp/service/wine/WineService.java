@@ -1,9 +1,6 @@
 package com.htp.service.wine;
 
-import com.htp.entity.books.Books;
-import com.htp.entity.stamps.Stamps;
 import com.htp.entity.wine.Wine;
-import com.htp.repository.books.BooksRepository;
 import com.htp.repository.wine.WineRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

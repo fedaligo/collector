@@ -35,13 +35,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-    public String[] getTokenFromHeaderAndUserNameFromToken(String authorizationHeader){
-        String[] info = new String[2];
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            info[0] = authorizationHeader.substring(15, authorizationHeader.length() - 2);
-            info[1] = jwtUtil.extractUserName(info[0]);
+    private void checkUserNameAndContext(String userName, String jwt, HttpServletRequest httpServletRequest){
+        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = myUserDetailsService.loadUserByUsername(userName);
+            checkTokenAndSetDetailsWithAuthentication(userDetails, jwt, httpServletRequest);
         }
-        return info;
     }
 
     private void checkTokenAndSetDetailsWithAuthentication(UserDetails userDetails, String jwt,
@@ -55,13 +53,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
     }
-
-    private void checkUserNameAndContext(String userName, String jwt, HttpServletRequest httpServletRequest){
-        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = myUserDetailsService.loadUserByUsername(userName);
-            checkTokenAndSetDetailsWithAuthentication(userDetails, jwt, httpServletRequest);
-        }
-    }
-
-
 }
